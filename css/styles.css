@@ -199,9 +199,7 @@ header {
 .prod-card:hover .prod-img img { transform:scale(1.05);filter:brightness(1) saturate(1); }
 .prod-body { padding: 1.5rem; }
 .prod-name { font-weight: 800; font-size: 1.2rem; text-transform: uppercase; }
-.prod-desc { font-size: .77rem; color: var(--mid-gray); margin-top: .3rem; }
-.prod-price { font-size: 1.9rem; font-weight: 900; color: var(--accent); margin: .8rem 0 1.1rem; line-height: 1; }
-.prod-price small { font-size: .82rem; color: var(--mid-gray); font-weight: 400; }
+.prod-desc { font-size: .77rem; color: var(--mid-gray); margin: .3rem 0 1.3rem; }
 
 .colores-row { display: flex; align-items: center; justify-content: center; gap: .6rem; flex-wrap: wrap; margin-bottom: 3rem; }
 .colores-label { font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mid-gray); margin-right: .3rem; }
