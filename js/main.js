@@ -1,6 +1,11 @@
 // GOMATECH — main.js
-// Menú móvil, slider del hero, reveal al scroll (IntersectionObserver) y
-// resaltado del link de nav activo. Todo vanilla JS, sin librerías externas.
+// Menú móvil, slider del hero, formulario de distribuidores (placeholder),
+// nav activo según sección visible y animaciones con GSAP + ScrollTrigger
+// (self-hosted en assets/js/vendor, ver CLAUDE.md).
+
+if (window.gsap && window.ScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 function toggleMenu() {
   document.getElementById('navLinks').classList.toggle('open');
@@ -49,21 +54,18 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   startAutoplay();
 })();
 
-// ── Reveal al hacer scroll ──
-(function initReveal() {
-  const targets = document.querySelectorAll('.reveal');
-  if (!targets.length) return;
+// ── Formulario "Quiero Vender" (placeholder, todavía sin backend) ──
+(function initVenderForm() {
+  const form = document.getElementById('venderForm');
+  if (!form) return;
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
-
-  targets.forEach(el => observer.observe(el));
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(form));
+    console.log('Formulario de distribuidores (placeholder, sin backend):', data);
+    alert('¡Gracias! Recibimos tus datos y te vamos a contactar pronto.');
+    form.reset();
+  });
 })();
 
 // ── Link de nav activo según la sección visible ──
@@ -85,3 +87,38 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 
   sections.forEach(section => observer.observe(section));
 })();
+
+// ── Animaciones (GSAP + ScrollTrigger) ──
+if (window.gsap && window.ScrollTrigger) {
+  const mm = gsap.matchMedia();
+
+  // Sólo anima si el usuario no pidió movimiento reducido. Si prefiere
+  // reduced-motion, este callback nunca corre y el contenido queda visible
+  // tal cual (no hay CSS que lo oculte por default).
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    const revealTargets = gsap.utils.toArray('.reveal');
+    let batchTriggers = [];
+
+    if (revealTargets.length) {
+      gsap.set(revealTargets, { autoAlpha: 0, y: 30 });
+      batchTriggers = ScrollTrigger.batch(revealTargets, {
+        start: 'top 88%',
+        onEnter: els => gsap.to(els, {
+          autoAlpha: 1, y: 0, duration: .7, stagger: .08, ease: 'power2.out', overwrite: true
+        })
+      });
+    }
+
+    // Hero: entrada al cargar la página (arriba del fold, no depende de scroll)
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      .from('.hero-kicker', { autoAlpha: 0, y: 24, duration: .7 })
+      .from('.hero h1', { autoAlpha: 0, y: 30, duration: .8 }, '-=.45')
+      .from('.hero-sub', { autoAlpha: 0, y: 24, duration: .7 }, '-=.5')
+      .from('.hero-content .btn-wa-lg', { autoAlpha: 0, y: 20, duration: .6 }, '-=.4');
+
+    return () => {
+      heroTl.kill();
+      batchTriggers.forEach(st => st.kill());
+    };
+  });
+}
