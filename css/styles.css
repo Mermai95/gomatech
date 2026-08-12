@@ -11,7 +11,6 @@
   --mid-gray: #767370;
   --border: rgba(255,255,255,0.08);
 }
-html { scroll-behavior: smooth; }
 body {
   background: var(--black);
   color: var(--off-white);
@@ -189,10 +188,38 @@ header {
   aspect-ratio: 1 / 1; background: #fff; border-radius: 20px;
   border: 1px solid var(--border); padding: 1.75rem;
   transition: transform .25s, box-shadow .25s;
+  font: inherit; cursor: pointer; -webkit-appearance: none; appearance: none;
 }
-.product-item:hover { transform: translateY(-6px); box-shadow: 0 14px 32px rgba(0,0,0,.35); }
+.product-item:hover, .product-item:focus-visible { transform: translateY(-6px); box-shadow: 0 14px 32px rgba(0,0,0,.35); }
 .product-item img { width: 100%; height: 100%; object-fit: contain; }
 .productos-cta { text-align: center; }
+
+/* ── MODAL FICHA DE PRODUCTO ── */
+.product-modal { position: fixed; inset: 0; z-index: 500; display: flex; align-items: center; justify-content: center; padding: 1.25rem; }
+.product-modal[hidden] { display: none; }
+.product-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(4px); }
+.product-modal-dialog {
+  position: relative; z-index: 1; width: 100%; max-width: 760px; max-height: 90vh; overflow-y: auto;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 22px;
+  display: flex; flex-direction: column;
+}
+.product-modal-close {
+  position: absolute; top: .9rem; right: .9rem; z-index: 2;
+  width: 38px; height: 38px; border-radius: 50%; border: none;
+  background: rgba(0,0,0,.55); color: #fff; display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.product-modal-img { background: #fff; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+.product-modal-img img { width: 100%; height: 100%; object-fit: contain; }
+.product-modal-body { padding: 1.75rem; }
+.product-modal-body h3 { font-weight: 900; font-size: 1.4rem; text-transform: uppercase; color: var(--off-white); margin-bottom: .4rem; }
+.product-modal-sizes { color: var(--green); font-weight: 700; font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; margin-bottom: .9rem; }
+.product-modal-body p:not(.product-modal-sizes) { color: var(--warm-gray); line-height: 1.7; margin-bottom: 1.5rem; }
+@media (min-width: 640px) {
+  .product-modal-dialog { flex-direction: row; }
+  .product-modal-img { width: 45%; aspect-ratio: auto; }
+  .product-modal-body { width: 55%; }
+}
 
 /* ── QUIERO VENDER ── */
 .vender-form {

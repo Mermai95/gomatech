@@ -27,6 +27,7 @@
   <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></symbol>
   <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
   <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.1 0 2-.9 2-2 0-.51-.2-.98-.52-1.32-.31-.34-.5-.79-.5-1.29 0-1.05.85-1.89 1.89-1.89H16c3.31 0 6-2.69 6-6C22 5.55 17.53 2 12 2z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
 </svg>
 
 <header>
@@ -129,21 +130,34 @@
     </p>
 
     <div class="products-grid">
-      <div class="product-item reveal" data-product="lata-1">
-        <img src="assets/banner-latas/lata-1.png" alt="GOMATECH Membrana Líquida" loading="lazy">
-      </div>
-      <div class="product-item reveal" data-product="lata-2">
-        <img src="assets/banner-latas/lata-2.png" alt="GOMATECH Membrana Líquida" loading="lazy">
-      </div>
-      <div class="product-item reveal" data-product="lata-3">
-        <img src="assets/banner-latas/lata-3.png" alt="GOMATECH Membrana Líquida" loading="lazy">
-      </div>
-      <div class="product-item reveal" data-product="lata-4">
-        <img src="assets/banner-latas/lata-4.png" alt="GOMATECH Membrana Líquida" loading="lazy">
-      </div>
-      <div class="product-item reveal" data-product="lata-5">
-        <img src="assets/banner-latas/lata-5.png" alt="GOMATECH Membrana Líquida" loading="lazy">
-      </div>
+      <button type="button" class="product-item reveal"
+        data-product="membrana-liquida"
+        data-name="Membrana Líquida GOMATECH"
+        data-sizes="4 Kg y 20 Kg"
+        data-desc="Membrana líquida impermeabilizante 6en1 elaborada con caucho 100% reciclado: elastómero, hidrorepelente, impermeable, antideslizante, antigranizo y barrera térmica en un solo producto. Ideal para techos, terrazas y muros expuestos al clima argentino.">
+        <img src="assets/banner-latas/membrana-liquida.jpg" alt="GOMATECH Membrana Líquida" loading="lazy">
+      </button>
+      <button type="button" class="product-item reveal"
+        data-product="membrana-atermica"
+        data-name="Membrana Atérmica ATERTECH"
+        data-sizes="20 Kg"
+        data-desc="Membrana impermeabilizante atérmica para techos y muros, formulada para reducir hasta 10°C la temperatura interior de la construcción. Barrera térmica e impermeabilizante con excelente adherencia.">
+        <img src="assets/banner-latas/membrana-atermica.jpg" alt="ATERTECH Membrana Atérmica" loading="lazy">
+      </button>
+      <button type="button" class="product-item reveal"
+        data-product="revestimiento-texturado"
+        data-name="Revestimiento Plástico Texturado"
+        data-sizes="6 Kg y 25 Kg"
+        data-desc="Revestimiento plástico texturado listo para usar, de fácil aplicación. Cubre microfisuras y aporta color y textura a muros interiores y exteriores.">
+        <img src="assets/banner-latas/revestimiento-texturado.jpg" alt="GOMATECH Revestimiento Plástico Texturado" loading="lazy">
+      </button>
+      <button type="button" class="product-item reveal"
+        data-product="masilla-plastica"
+        data-name="Masilla Plástica GOMATECH"
+        data-sizes="Para grietas y fisuras"
+        data-desc="Masilla plástica elastomérica para reparar grietas y fisuras en muros. Fácil aplicación con espátula, ideal como paso previo a la impermeabilización.">
+        <img src="assets/banner-latas/masilla-plastica.jpg" alt="GOMATECH Masilla Plástica" loading="lazy">
+      </button>
     </div>
 
     <div class="productos-cta reveal">
@@ -153,6 +167,25 @@
     </div>
   </div>
 </section>
+
+<!-- ═══ MODAL FICHA DE PRODUCTO ═══ -->
+<div class="product-modal" id="productModal" hidden>
+  <div class="product-modal-backdrop" data-close-modal></div>
+  <div class="product-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="productModalName">
+    <button type="button" class="product-modal-close" data-close-modal aria-label="Cerrar">
+      <svg class="icon"><use href="#i-close"/></svg>
+    </button>
+    <div class="product-modal-img">
+      <img id="productModalImg" src="" alt="">
+    </div>
+    <div class="product-modal-body">
+      <h3 id="productModalName"></h3>
+      <p class="product-modal-sizes" id="productModalSizes"></p>
+      <p id="productModalDesc"></p>
+      <a href="https://wa.link/ivrslh" target="_blank" class="btn-wa-lg"><svg class="icon icon--solid"><use href="#i-whatsapp"/></svg> Consultá por WhatsApp</a>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ QUIERO VENDER ═══ -->
 <section class="section" id="vender">

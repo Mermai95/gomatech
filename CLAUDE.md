@@ -23,8 +23,13 @@ js/main.js    → Menú móvil, slider del hero, formulario de distribuidores (p
                 nav activo según sección visible, animaciones GSAP/ScrollTrigger.
 assets/img/   → Fotos reales (jpg), nombradas img-01 a img-14 (algunas son duplicados
                 casi idénticos entre sí: 03≈09, 04≈06, 08≈12)
-assets/banner-latas/ → Imágenes de las latas de producto (lata-1.png a lata-5.png),
-                usadas en el grid de la sección #productos (sin texto, sin precio).
+assets/banner-latas/ → Fotos de producto (jpg, optimizadas ~85-130KB, lado largo 900px)
+                usadas en el grid de #productos: membrana-liquida.jpg, membrana-atermica.jpg,
+                revestimiento-texturado.jpg, masilla-plastica.jpg. Cada `.product-item` es un
+                `<button>` con `data-name`/`data-sizes`/`data-desc` que alimenta el modal de
+                ficha de producto (ver "Ficha de producto" abajo). Fuente original de estas
+                fotos (sin optimizar, varios MB) queda en `latas-goma/` en la raíz del repo,
+                fuera de `assets/` — no se sube al sitio, es sólo el archivo del cliente.
 assets/catalogo-mayorista.pdf → Catálogo real, botón de descarga dentro de #productos.
 assets/js/vendor/ → GSAP + ScrollTrigger self-hosted (gsap.min.js, ScrollTrigger.min.js).
 ```
@@ -44,6 +49,21 @@ que el sitio siga sin depender de servicios de terceros en producción.
   contenido queda visible sin animar (no hay CSS que lo oculte por default).
 - Si se agregan nuevos elementos animados, sumarles la clase `reveal` alcanza
   para que entren al sistema existente; no hace falta tocar el JS.
+- **No agregar `scroll-behavior: smooth` en CSS.** Es incompatible con
+  ScrollTrigger (lo indica la propia documentación de GSAP): la animación nativa
+  del navegador interfiere con cómo ScrollTrigger mide el scroll y las
+  `.reveal` de la sección de destino pueden quedar trabadas en opacidad 0
+  al saltar por un link de ancla (`#productos`, etc.). El scroll a anclas
+  queda nativo (instantáneo) y `initAnchorRevealSafety` en `js/main.js`
+  fuerza visibles los `.reveal` que quedan por encima del destino como red
+  de seguridad ante ese jump instantáneo.
+
+## Ficha de producto (modal)
+Al hacer click en un `.product-item` de `#productos` se abre un modal (`#productModal`
+en `index.html`) con imagen grande, nombre, presentaciones y descripción — todo leído
+de los `data-*` del botón clickeado (`initProductModal` en `js/main.js`). No linkea a
+una página aparte; sigue siendo single-page. El CTA del modal es WhatsApp, igual que
+el resto del sitio.
 
 ## Reglas de edición
 - **No volver a embeber imágenes ni PDFs en base64.** Todo va como archivo real en `assets/`.
@@ -59,9 +79,10 @@ que el sitio siga sin depender de servicios de terceros en producción.
 - **Sin precios en el sitio.** Es puramente informativo; la info de precio se maneja
   por WhatsApp. No reagregar montos en pesos salvo pedido explícito.
 - Los cards de la grilla de `#productos` (`.product-item`, imágenes de
-  `assets/banner-latas/`) todavía no linkean a ninguna ficha de producto
-  (`data-product` como placeholder). Cuando existan fichas individuales, ese es
-  el lugar para agregar el link.
+  `assets/banner-latas/`) abren el modal de ficha de producto al hacer click
+  (ver "Ficha de producto"). Para agregar un producto nuevo: sumar un `<button
+  class="product-item reveal">` con `data-name`/`data-sizes`/`data-desc` e imagen
+  optimizada (jpg, lado largo ~900px) en `assets/banner-latas/`.
 - CSS escrito **mobile-first**: reglas base sin media query = mobile; `@media (min-width: …)`
   agrega layout de tablet/desktop. No volver al patrón desktop-first con `max-width`.
 - Colores del sistema: verde `#3aad58`, acento lima `#c8f53a`, amarillo `#FFE600`,
@@ -75,8 +96,6 @@ que el sitio siga sin depender de servicios de terceros en producción.
 - El formulario de `#vender` todavía no tiene backend real (el submit sólo hace
   `console.log` + `alert` en `js/main.js`). Falta conectarlo a algún servicio
   (Netlify Forms, un endpoint propio, etc.) cuando el cliente lo defina.
-- Los cards de `#productos` no linkean a fichas de producto individuales todavía
-  (ver "Reglas de edición").
 - El PDF del catálogo pesa ~10MB — si crece, considerar comprimirlo (herramienta como
   Ghostscript o similar) para no inflar el repo.
 

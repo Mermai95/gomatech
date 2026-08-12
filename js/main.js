@@ -18,6 +18,41 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   });
 });
 
+// ── Red de seguridad para saltos de ancla (#inicio, #productos, etc.) ──
+// El salto de ancla nativo del browser es instantáneo (sin `scroll-behavior:
+// smooth` de CSS acá — GSAP ScrollTrigger no lo detecta bien y las animaciones
+// `.reveal` de la sección de destino pueden quedar trabadas en opacidad 0).
+// Como el salto es instantáneo, ScrollTrigger.batch a veces no llega a
+// "engancharlo": por eso, además, mostramos de una los `.reveal` que quedan
+// por encima del punto de destino para que nunca se queden invisibles.
+(function initAnchorRevealSafety() {
+  function forceRevealUpTo(target) {
+    if (!window.gsap) return;
+    const header = document.querySelector('header');
+    const headerH = header ? header.offsetHeight : 0;
+    const limit = target.getBoundingClientRect().top + window.scrollY - headerH + window.innerHeight;
+    document.querySelectorAll('.reveal').forEach(el => {
+      const elDocTop = el.getBoundingClientRect().top + window.scrollY;
+      if (elDocTop < limit) gsap.set(el, { autoAlpha: 1, y: 0 });
+    });
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    const id = link.getAttribute('href');
+    if (id.length < 2) return;
+    link.addEventListener('click', () => {
+      const target = document.querySelector(id);
+      if (target) forceRevealUpTo(target);
+    });
+  });
+
+  // Si se entra directo con un hash en la URL (ej. link compartido a #productos)
+  if (location.hash) {
+    const target = document.querySelector(location.hash);
+    if (target) window.addEventListener('load', () => forceRevealUpTo(target));
+  }
+})();
+
 // ── Hero slider ──
 (function initHeroSlider() {
   const slides = document.querySelectorAll('.hero-slide');
@@ -65,6 +100,48 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     console.log('Formulario de distribuidores (placeholder, sin backend):', data);
     alert('¡Gracias! Recibimos tus datos y te vamos a contactar pronto.');
     form.reset();
+  });
+})();
+
+// ── Ficha de producto (modal) ──
+(function initProductModal() {
+  const modal = document.getElementById('productModal');
+  if (!modal) return;
+
+  const img = document.getElementById('productModalImg');
+  const name = document.getElementById('productModalName');
+  const sizes = document.getElementById('productModalSizes');
+  const desc = document.getElementById('productModalDesc');
+  let lastFocused = null;
+
+  function openModal(card) {
+    img.src = card.querySelector('img').src;
+    img.alt = card.querySelector('img').alt;
+    name.textContent = card.dataset.name || '';
+    sizes.textContent = card.dataset.sizes || '';
+    desc.textContent = card.dataset.desc || '';
+    lastFocused = document.activeElement;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    modal.querySelector('.product-modal-close').focus();
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  document.querySelectorAll('.product-item[data-product]').forEach(card => {
+    card.addEventListener('click', () => openModal(card));
+  });
+
+  modal.querySelectorAll('[data-close-modal]').forEach(el => {
+    el.addEventListener('click', closeModal);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !modal.hidden) closeModal();
   });
 })();
 
