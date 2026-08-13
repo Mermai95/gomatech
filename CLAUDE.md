@@ -21,11 +21,13 @@ index.html    → Header + hero slider + #quienes (incluye bloque de Valores)
 css/styles.css → Todo el CSS del sitio, mobile-first (dark theme, verde #3aad58, lima #c8f53a)
 js/main.js    → Menú móvil, slider del hero, formulario de distribuidores (placeholder),
                 nav activo según sección visible, animaciones GSAP/ScrollTrigger.
-assets/img/   → Fotos reales (jpg), nombradas img-01 a img-14 (algunas son duplicados
-                casi idénticos entre sí: 03≈09, 04≈06, 08≈12)
-assets/banner-latas/ → Fotos de producto (jpg, optimizadas ~85-130KB, lado largo 900px)
-                usadas en el grid de #productos: membrana-liquida.jpg, membrana-atermica.jpg,
-                revestimiento-texturado.jpg, masilla-plastica.jpg. Cada `.product-item` es un
+assets/img/   → Fotos reales (jpg), nombradas img-01 a img-17 (01-14 son fotos del
+                local/producto; 15-17 son los mismos fondos de latas que usa el hero
+                slider, ver abajo. Algunas son duplicados casi idénticos: 03≈09, 04≈06, 08≈12)
+assets/banner-latas/ → Fotos de producto (jpg, optimizadas ~85-195KB, lado largo 900px)
+                usadas en el grid de #productos: membrana-liquida-4kg.jpg,
+                membrana-liquida-20kg.jpg, membrana-atermica.jpg, revestimiento-6kg.jpg,
+                revestimiento-25kg.jpg, masilla-plastica.jpg. Cada `.product-item` es un
                 `<button>` con `data-name`/`data-sizes`/`data-desc` que alimenta el modal de
                 ficha de producto (ver "Ficha de producto" abajo). Fuente original de estas
                 fotos (sin optimizar, varios MB) queda en `latas-goma/` en la raíz del repo,

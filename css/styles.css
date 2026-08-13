@@ -334,7 +334,6 @@ footer { background: var(--rubber); border-top: 1px solid var(--border); padding
   .section { padding: 8rem 0; }
   .section-label, .section-title { text-align: center; }
   .value-card { flex: 1 1 calc(33.333% - 1rem); max-width: calc(33.333% - 1rem); }
-  .products-grid { grid-template-columns: repeat(5,1fr); }
   .quienes-grid { margin-bottom: 4.5rem; }
   .vender-form { padding: 3.5rem; }
 }
