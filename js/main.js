@@ -1,7 +1,7 @@
 // GOMATECH — main.js
-// Menú móvil, slider del hero, formulario de distribuidores (placeholder),
-// nav activo según sección visible y animaciones con GSAP + ScrollTrigger
-// (self-hosted en assets/js/vendor, ver CLAUDE.md).
+// Menú móvil, formulario de distribuidores (placeholder), nav activo según
+// sección visible y animaciones con GSAP + ScrollTrigger (self-hosted en
+// assets/js/vendor, ver CLAUDE.md).
 
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
@@ -51,42 +51,6 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     const target = document.querySelector(location.hash);
     if (target) window.addEventListener('load', () => forceRevealUpTo(target));
   }
-})();
-
-// ── Hero slider ──
-(function initHeroSlider() {
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots = document.querySelectorAll('.hero-dot');
-  if (!slides.length) return;
-
-  let current = 0;
-  let timer;
-
-  function goTo(index) {
-    slides[current].classList.remove('active');
-    dots[current].classList.remove('active');
-    current = index;
-    slides[current].classList.add('active');
-    dots[current].classList.add('active');
-  }
-
-  function next() {
-    goTo((current + 1) % slides.length);
-  }
-
-  function startAutoplay() {
-    timer = setInterval(next, 5000);
-  }
-
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      clearInterval(timer);
-      goTo(i);
-      startAutoplay();
-    });
-  });
-
-  startAutoplay();
 })();
 
 // ── Formulario "Quiero Vender" (placeholder, todavía sin backend) ──
@@ -186,15 +150,7 @@ if (window.gsap && window.ScrollTrigger) {
       });
     }
 
-    // Hero: entrada al cargar la página (arriba del fold, no depende de scroll)
-    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      .from('.hero-kicker', { autoAlpha: 0, y: 24, duration: .7 })
-      .from('.hero h1', { autoAlpha: 0, y: 30, duration: .8 }, '-=.45')
-      .from('.hero-sub', { autoAlpha: 0, y: 24, duration: .7 }, '-=.5')
-      .from('.hero-content .btn-wa-lg', { autoAlpha: 0, y: 20, duration: .6 }, '-=.4');
-
     return () => {
-      heroTl.kill();
       batchTriggers.forEach(st => st.kill());
     };
   });

@@ -15,15 +15,16 @@ manual o vía Netlify CLI/drag&drop.
 Sitio **single-page** (todo vive en `index.html`, con secciones ancla — no hay
 páginas separadas ni includes):
 ```
-index.html    → Header + hero slider + #quienes (incluye bloque de Valores)
+index.html    → Header + hero (imagen fija, sin texto) + hero-info (texto
+                informativo debajo) + #quienes (incluye bloque de Valores)
                 + #productos + #vender (formulario de distribuidores)
                 + #contacto + footer + botón flotante de WhatsApp
 css/styles.css → Todo el CSS del sitio, mobile-first (dark theme, verde #3aad58, lima #c8f53a)
-js/main.js    → Menú móvil, slider del hero, formulario de distribuidores (placeholder),
+js/main.js    → Menú móvil, formulario de distribuidores (placeholder),
                 nav activo según sección visible, animaciones GSAP/ScrollTrigger.
-assets/img/   → Fotos reales (jpg), nombradas img-01 a img-17 (01-14 son fotos del
-                local/producto; 15-17 son los mismos fondos de latas que usa el hero
-                slider, ver abajo. Algunas son duplicados casi idénticos: 03≈09, 04≈06, 08≈12)
+assets/img/   → Fotos reales (jpg), nombradas img-01 a img-14 (fotos del local/producto,
+                algunas son duplicados casi idénticos: 03≈09, 04≈06, 08≈12) + img-18.jpg
+                (banner de marca "BANNER1GOMA", fondo fijo del hero, ver abajo).
 assets/banner-latas/ → Fotos de producto (jpg, optimizadas ~85-195KB, lado largo 900px)
                 usadas en el grid de #productos: membrana-liquida-4kg.jpg,
                 membrana-liquida-20kg.jpg, membrana-atermica.jpg, revestimiento-6kg.jpg,
